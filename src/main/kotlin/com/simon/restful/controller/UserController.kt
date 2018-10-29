@@ -16,4 +16,16 @@ class UserController {
     fun getAllUsers(): Iterable<User> {
         return userRepository.findAll()
     }
+
+    @PostMapping("")
+    fun addNewUser(
+            @RequestParam(value = "name") name: String,
+            @RequestParam(value = "email") emailAddress: String,
+            @RequestParam(value = "age") age: Byte
+    ): User {
+        val newUser = User(0, name, emailAddress, age)
+        userRepository.save(newUser)
+
+        return newUser
+    }
 }
