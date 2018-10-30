@@ -30,4 +30,16 @@ class UserController {
 
         return ResponseEntity(newUser, HttpStatus.CREATED)
     }
+
+    @DeleteMapping("{id}")
+    fun deleteUser(@PathVariable id: Int): ResponseEntity<Unit> {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id)
+
+            return ResponseEntity(HttpStatus.OK)
+        }
+
+        return ResponseEntity(HttpStatus.NOT_FOUND)
+
+    }
 }
