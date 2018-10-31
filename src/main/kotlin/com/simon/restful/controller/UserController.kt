@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("users")
@@ -17,6 +18,15 @@ class UserController {
     @GetMapping("")
     fun getAllUsers(): Iterable<User> {
         return userRepository.findAll()
+    }
+
+    @GetMapping("{id}")
+    fun getUser(@PathVariable id: Int): ResponseEntity<Optional<User>> {
+        if (!userRepository.existsById(id)) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+
+        return ResponseEntity(userRepository.findById(id), HttpStatus.OK)
     }
 
     @PostMapping("")
