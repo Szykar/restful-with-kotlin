@@ -52,4 +52,18 @@ class UserController {
         return ResponseEntity(HttpStatus.NOT_FOUND)
 
     }
+
+    @PutMapping("{id}")
+    fun updateUser(
+            @PathVariable id: Int,
+            @RequestBody user: User
+    ): ResponseEntity<User> {
+        if (!userRepository.existsById(id)) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+
+        userRepository.save(user)
+
+        return ResponseEntity(user, HttpStatus.OK)
+    }
 }
